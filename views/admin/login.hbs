@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <div class="body">
+      <meta charset="utf-8">
+      <title>Login Form Design </title>
+      <link rel="stylesheet" href="/assets/css/adminlogin.css">
+   </head>
+   <body>
+      <div class="wrapper">
+         <div class="title">
+          Admin Login Form
+            
+         </div>
+        {{#if message}}
+               <h3>{{message}}</h3>
+        {{/if}}
+       
+         <form action="/admin/login" method="post">
+            <div class="field">
+               <input type="text" required name="email">
+               <label>Email Address</label>
+            </div>
+            <div class="field">
+               <input type="password" required name="password">
+               <label>Password</label>
+            </div>
+            <div class="content">
+               <div class="checkbox">
+                  <input type="checkbox" id="remember-me">
+                  <label for="remember-me">Remember me</label>
+               </div>
+               <div class="pass-link">
+                  <a href="/admin/email">Forgot password?</a>
+               </div>
+            </div>
+            <div class="field">
+               <input type="submit" value="Login">
+            </div>
+            <div class="signup-link">
+               Not a member? <a href="/signup">Signup now</a>
+            </div>
+         </form>
+      </div>
+   </body>
+   </div>
+</html>

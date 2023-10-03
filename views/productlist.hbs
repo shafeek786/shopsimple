@@ -1,0 +1,171 @@
+{{> header2}}
+
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START SECTION SHOP -->
+<div class="section">
+	<div class="container">
+    	<div class="row">
+			<div class="col-lg-9">
+                <div class="row align-items-center mb-4 pb-1">
+                    <div class="col-12">
+                        <div class="product_header">
+                                <div class="product_search_form">
+                                    <form action="/productSearch" method="post">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="custom_select">
+                                                    <select class="first_null" name="catId">
+                                                        <option value="">All Category</option>
+                                                        <option value="MEN">Men</option>
+                                                        <option value="Women">Women</option>
+                                                        <option value="Boys">Boys</option>
+                                                        <option value="Girls">Girls</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <input class="form-control" placeholder="Search Product..." name="search" required="" type="text">
+                                            <button type="submit" class="search_btn"><i class="linearicons-magnifier"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                         
+                            <div class="product_header_right">
+                            	<div class="products_view">
+                                    <a href="javascript:Void(0);" class="shorting_icon grid"><i class="ti-view-grid"></i></a>
+                                    <a href="javascript:Void(0);" class="shorting_icon list active"><i class="ti-layout-list-thumb"></i></a>
+                                </div>
+                                <div class="custom_select">
+                                    <select class="form-control form-control-sm">
+                                        <option value="">Showing</option>
+                                        <option value="9">9</option>
+                                        <option value="12">12</option>
+                                        <option value="18">18</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row shop_container list">
+                     {{#each pdata}}
+                    <div class="col-md-4 col-6">
+                   
+                        <div class="product">
+                            <div class="product_img">
+                                <a href="shop-product-detail.html">
+                                    <img src="{{this.image1.[0]}}" alt="product_img1">
+                                </a>                             
+                            </div>
+                            <div class="product_info">
+                                <h6 class="product_title"><a href="shop-product-detail.html">{{this.name}}</a></h6>
+                                <div class="product_price">
+                                    <span class="price">{{this.price}}</span>
+                                </div>
+                                <div class="pr_desc">
+                                    <p>{{this.description}}</p>
+                                </div>      
+                                <div class="list_product_action_box">
+                                    <ul class="list_none pr_action_btn">                                         
+                                    {{#if this.isOnCart}}    
+                                        <li class="add-to-cart"><a href="/cart?id={{../userData._id}}"><i class="icon-basket-loaded"></i> Go To Cart</a></li>
+                                        {{else}}
+                                        {{#if (grt this.quantity 0)}}
+                                        <input name="product_name" value="{{this.name}}" type="hidden">
+                                      <span id="cart_btn">
+                                        <button onclick="addToCartBtn('{{this._id}}')" id="add_to_cart_btn"
+                                            class="btn btn-fill-out btn-addtocart cart_btn" type="button"><i
+                                                class="icon-basket-loaded"></i> Add to cart</button>
+                                        </span>                                        
+                                        {{else}}
+                                        <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Out of stock</a></li>                                       
+                                        {{/if}}
+                                        {{/if}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                     {{/each}}      
+                </div>
+        		<div class="row">
+                    <div class="col-12">
+                        <ul class="pagination mt-3 justify-content-center pagination_style1">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#"><i class="linearicons-arrow-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+        	</div>
+              <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+            	<div class="sidebar">
+                	<div class="widget">
+                        <h5 class="widget_title">Categories</h5>
+                        <ul class="widget_categories">
+                            <li><a href="/men?cat=men"><span class="categories_name">Men</span><span class="categories_num">(9)</span></a></li>
+                            <li><a href="/women"><span class="categories_name">Women</span><span class="categories_num">(6)</span></a></li>
+                            <li><a href="/boys"><span class="categories_name">Boys</span><span class="categories_num">(4)</span></a></li>
+                            <li><a href="/girls"><span class="categories_name">Girls</span><span class="categories_num">(7)</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+<!-- Latest jQuery --> 
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+<!-- jquery-ui -->
+<script src="assets/js/jquery-ui.js"></script>
+
+<script src="assets/js/magnific-popup.min.js"></script>
+<script src="assets/js/scripts.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{{>footer}}
+<script>
+    const priceRange = async(pdata)=>{
+        window.alert("hi")
+    }
+     const addToCartBtn = async (prId) => {
+            const productid = document.getElementById('add_to_cart_btn').value;
+            const productName = document.getElementsByName('product_name')[0].value;
+         
+            const response = await fetch(`/add_to_cart?id=${prId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            let data = await response.json();
+            console.log(data, 'from add to cart btn....');
+            document.getElementById('cart_btn').innerHTML =
+                `<a href="/cart?id={{../userData._id}}" class="mt-5 flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 " style="text-decoration: none;">Go to cart</a>`;
+  window.alert("hi")
+            if (data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Awww 🥳!',
+                    text: `${productName} added to Cart!`,
+                    confirmButtonText: 'OK',
+                }, function () {
+
+                })
+            }
+            window.location.reload();
+        };
+        const outOfStock = () => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Out of Stock',
+                text: 'This item is currently out of stock.',
+                confirmButtonText: 'OK',
+            });
+        };
+</script>

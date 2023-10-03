@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "dummy project",
+			"path": ".."
+		},
+		{
+			"name": "assets",
+			"path": "../../shopEasy/assets"
+		}
+	],
+	"settings": {}
+}

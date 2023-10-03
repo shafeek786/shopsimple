@@ -1,0 +1,275 @@
+{{> header2}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        body {
+            color: #69707a;
+        }
+
+        .img-account-profile {
+            height: 10rem;
+        }
+
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+
+        .card .card-header {
+            font-weight: 500;
+        }
+
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+
+        .form-control,
+        .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .nav-borders .nav-link.active {
+            color: #0061f2;
+            border-bottom-color: #0061f2;
+        }
+
+        .nav-borders .nav-link {
+            color: #69707a;
+            border-bottom-width: 0.125rem;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-borders .nav-link {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .card-header {
+                padding: 0.75rem 1.0rem;
+            }
+
+            .img-account-profile {
+                height: 8rem;
+            }
+
+            .col-lg-3 {
+                flex-basis: 50%;
+                max-width: 50%;
+            }
+
+            .form-control,
+            .dataTable-input {
+                font-size: 0.8125rem;
+                padding: 0.625rem 0.8125rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-xl px-4" style="margin-top: 100px; margin-bottom: 100px;">
+        <!-- Account page navigation-->
+        <nav class="nav nav-borders">
+        
+            <a class="nav-link active ms-0" href="/wishlist">Wishlist</a>
+            <a class="nav-link" href="/my_orders">My Orders</a>
+        </nav>
+        <hr class="mt-0 mb-4">
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Wishlist</div>
+                    <div class="card-body">
+                        {{!-- Add a condition to display the response message --}}
+                    {{#if responseMessage}}
+                        <div class="alert alert-info" role="alert">
+                            {{responseMessage}}
+                        </div>
+                    {{/if}}
+                        {{!-- <span id="pro_container"> --}}
+                            <div class="row isotope-grid" id="productList">
+                                {{#if wishItem}}
+                                {{#each wishItem}}
+                                {{!-- <span id="pro_cont{{this._id}}"> --}}
+                                    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women"
+                                        id="pro_cont{{this._id}}">
+                                        <!-- Block2 -->
+                                        <div class="block2">
+                                            <div class="block2-pic hov-img0">
+                                                <img src="{{this.image1.[0]}}" alt="IMG-PRODUCT">
+                                                <a href="/productdetails?id={{this._id}}"
+                                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+                                                    Quick View
+                                                </a>
+                                            </div>
+                                            <div class="dis-flex" style="justify-content: space-between;">
+                                                <button onclick="addToCartBtn('{{this._id}}')"
+                                                    class=" mt-2 btn btn-sm btn-outline-secondary">Add to cart</button>
+                                                  
+                                                <button onclick="removeWishlist('{{this._id}}','{{this._id}}')"
+                                                    class=" mt-2 btn btn-sm btn-outline-secondary">Remove</button>
+                                                {{!-- <button onclick="testSweetAlert()">Test SweetAlert</button> --}}
+                                            </div>
+                                            <div class="block2-txt flex-w flex-t p-t-14">
+                                                <div class="block2-txt-child1 flex-col-l ">
+                                                    <a href="/productDetail?id={{this._id}}"
+                                                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                                        {{this.name}}
+                                                    </a>
+                                                    <input type="hidden" id="name{{this._id}}" value="{{this.name}}">
+                                                    <input type="hidden" id="id" value="{{this._id}}">
+                                                    <span class="stext-105 cl3">
+                                                        ₹ {{this.price}}
+                                                    </span>
+                                                </div>
+                                                <div class="block2-txt-child2 flex-r p-t-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                                {{/each}}
+                                {{else}}
+
+                                <div class="text-center">
+                                    <h1 class="mt-5">Your wishlist is empty..!</h1>
+
+                                    <a href="/products" class="btn btn-primary mt-4">Go to products</a>
+                                </div>
+
+                                {{/if}}
+                            </div>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+{{!--
+<script>
+    function testSweetAlert() {
+        Swal.fire('Hello, SweetAlert is working!');
+    }
+</script> --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  const addToCartBtn = async (prId) => {
+  try {
+  const response = await fetch(`/add_to_cart?id=${prId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+    let data = await response.json();
+
+    // Handle the response based on the message received from the server
+    if (data.message === 'Out of stock. Cannot add to cart.') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Out of Stock',
+        text: 'This product is currently out of stock.',
+      });
+    } else if (data.message === 'Item already in cart') {
+      Swal.fire({
+        icon: 'info',
+        title: 'Already in Cart',
+        text: 'Product already exists in Cart!',
+      });
+    } else if (data.message === 'Item added to cart') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to Cart',
+        text: 'Product added to Cart!',
+      });
+    }
+
+    console.log('added to carttt');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
+
+
+
+    const removeWishlist = async (id, idd) => {
+        try {
+            const response = await fetch(`/remove_from_wishlist?id=${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            let data = await response.json();
+            if (data) {
+                // Replace the swal() function with SweetAlert2 Swal.fire()
+                Swal.fire('🥳', `${data.message}`, 'success'); // Use the product name from the response data
+
+                const removedElement = document.getElementById('pro_cont' + idd);
+                removedElement.remove(); // Remove the element from the DOM
+                // Automatically reload the page after the item is removed
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+</script>
+{{>footer}}

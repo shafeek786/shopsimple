@@ -1,0 +1,141 @@
+{{>adminHeader}}
+<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body">
+
+
+
+
+
+
+
+  <div class="container-fluid pt-4 px-4">
+
+    <div class="bg-light text-left rounded p-4">
+
+      <div class="d-flex align-items-left justify-content-between mb-4">
+        <h6 class="mb-0  text-primary shadow p-3 mb-5 bg-body rounded ">Users List</h6>
+        {{!-- <a href="">Show All</a> --}}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table text-start align-middle table-bordered table-hover mb-0">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">NAME</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">MOBILE</th>
+              <th scope="col">BLOCK</th>
+              <th scope="col">DELETE</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each details}}
+
+            <tr>
+              <th scope="row"><input type="checkbox" /></th>
+
+              <td>{{this.name}}</td>
+              <td>{{this.email}}</td>
+              <td>{{this.mobile}}</td>
+
+
+              {{#if this.is_blocked}}
+              <td>
+                <a onclick="unblockUser('{{this._id}}')" class="tm-product-delete-link">
+                  <i class="fa-solid fa-unlock-keyhole"></i>
+                </a>
+              </td>
+              {{else}}
+              <td>
+                
+                <a onclick="blockUser('{{this._id}}')" class="tm-product-delete-link">
+                  <i class="fa-solid fa-ban"></i>
+                </a>
+              </td>
+              {{/if}}
+              <td>
+                <a href="/admin/deleteuser?id={{this._id}}" class="tm-product-delete-link">
+                  <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                </a>
+              </td>
+            </tr>
+
+          </tbody>
+          {{/each}}
+        </table>
+        </div>
+      
+       <nav aria-label="...">
+      <ul class="pagination pagination-sm justify-content-center">
+        {{#for 1 totalPages 1}}
+        <li class="page-item {{#ifeq this ../currentPage}}active{{/ifeq}}">
+          <a class="page-link" href="/admin/product?page={{this}}">
+            {{this}}
+          </a>
+        </li>
+        {{/for}}
+      </ul>
+    </nav>
+    </div>
+
+   </div>
+  </div>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- Add the SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<script text="ja">
+  const blockUser = async(userid)=> {
+    const result = await Swal.fire({
+				title: 'Block user',
+				text: 'Do you want to continue?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonText: 'Ok',
+				cancelButtonText: 'cancel'
+			});
+    	if (result.isConfirmed) {
+				    const response = await fetch(`/admin/blockuser?id=${userid}`, {
+          
+        });
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				return
+			}
+      window.location.reload()
+  }
+    const unblockUser = async(userid)=> {
+    const result = await Swal.fire({
+				title: 'Unblock user',
+				text: 'Do you want to continue?',
+				
+        showCancelButton: true,
+				confirmButtonText: 'Ok',
+				cancelButtonText: 'cancel'
+			});
+    	if (result.isConfirmed) {
+				    const response = await fetch(`/admin/unlockuser?id=${userid}`, {
+          
+        });
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				retunr
+			}
+      window.location.reload()
+  }
+</script>
+
+
+
+
+
+
+<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+<!--**********************************
+            Footer start
+{{>adminFooter}}

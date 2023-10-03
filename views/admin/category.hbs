@@ -1,0 +1,83 @@
+{{>adminHeader}}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="container-fluid mt-3">
+                
+                <div class="row ">
+                    <div class="col-lg-12 ">
+                        <div class="row bg_dark">
+                            <div class="col-12 ">
+                                <div class="card ">
+                                    <div class="card-body pb-0 d-flex justify-content-between">
+                                       
+                                        <div class="container mt-5">
+                                            <div class="row tm-content-row">
+                                              
+                                              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+                                                <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+                                                  <h2 class="tm-block-title">Product Categories <i class="fa-regular fa-square-plus"></i></h2>
+                                                  
+                                                  <div class="tm-product-table-container">
+                                                    <table class="table tm-table-small tm-product-table">
+                                                      <thead>
+                                                        <tr>
+                                                            <th scope="col">&nbsp;</th>
+                                                            <th scope="col">CATEGORY</th>
+                                                            <th scope="col">DESCRIPTION</th>
+                                                            <th scope="col">EDIT</th>
+                                                            <th scope="col">DELETE</th>
+                                                            <th scope="col">&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                      <tbody>
+                                                       {{#each details}}
+                                                              <tr>
+                                                <th scope="row"><input type="checkbox" /></th>
+                                               
+                                                <td >{{this.NAME}}</td>
+                                                <td>{{this.DESCRIPTION}}</td>                                        
+                                                <td>
+                                                    <a href="/admin/editcategory?id={{this._id}}" class="tm-product-delete-link">
+                                                        <i class="fa-regular fa-pen-to-square"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/deletecategory?id={{this._id}}" class="tm-product-delete-link">
+                                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                                      
+                                                      </tbody>
+                                                     {{/each}}
+                                                    </table>
+                                                  </div>
+                                                  <!-- table container -->
+                                                  <button href="/admin/addcategory" class="btn btn-primary btn-block text-uppercase mb-3">
+                                                    Add new category
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+
+           
+                            
+                    
+                
+
+    
+{{>adminFooter}}

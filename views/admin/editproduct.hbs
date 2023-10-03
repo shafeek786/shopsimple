@@ -1,0 +1,176 @@
+{{>adminHeader}}
+  <!--**********************************
+            Content body start
+        ***********************************-->
+  <div class="content-body">
+
+    <div class="container-fluid mt-3">
+      <div class="card p-5">
+        <div class="container tm-mt-big tm-mb-big">
+          <div class="row">
+            <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+              <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row">
+                  <div class="col-12">
+                    <h2 class="tm-block-title d-inline-block">Edit Product</h2>
+                  </div>
+                </div>
+                <div class="row tm-edit-product-row">
+                  <div class="col-xl-6 col-lg-6 col-md-12">
+                    {{#if pdata}}
+                       
+                       <form id="form" action="/admin/editProduct" method="POST" enctype="multipart/form-data">
+                      <div class="form-group mb-3">
+                        <label for="name">Product Name </label>
+                        <input id="name" value="{{pdata.name}}" name="name"  type="text" class="form-control validate" />
+                              <div><span style="color: rgb(206, 41, 41);" id="nameError" class="error"></span></div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                          <label for="expire_date">Price
+                          </label>
+                          <input id="TextBox1" value="{{pdata.price}}" name="price" type="text" class="form-control validate"
+                            data-large-mode="true" />
+                        </div>
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                          <label for="stock">Units In Stock
+                          </label>
+                          <input id="stock" name="stock" value="{{pdata.quantity}}" type="text" class="form-control validate"  />
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="category">Category</label>
+                        <select class="custom-select tm-select-accounts" id="category" value="{{pdata.category}}" name="category">
+                   
+                          <option selected value="{{pdata.category}}">{{pdata.category}} </option>
+                          {{#each details}}
+                          <option >{{this.NAME}}</option>
+                          {{/each}}
+                        </select>
+                       
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="description">Description</label>
+                        <textarea value="{{pdata.description}}" class="form-control validate" rows="3"   name="description"></textarea>
+                      </div> 
+
+                      <div class="row">
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                          <label for="expire_date">Status
+                          </label>
+                          <select class="custom-select tm-select-accounts" id="category" name="status">
+                            <option selected value="{{pdata.status}}">{{pdata.status}}</option>
+                            <option value="Available">Available</option>
+                            <option value="Out of Stock">Out of Stock</option>
+
+                          </select>
+
+                        </div>
+                        <div class="form-group mb-0 col-xs-12 col-sm-6">
+                          <label for="stock">Size
+                          </label>
+                          <input id="stock" value="{{pdata.size}}" required ="size" name="size" type="text" class="form-control validate"  />
+                        </div>
+                      </div>
+
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                    <div class="product-images">
+                      <img class="product-images" id="preview1" src="{{pdata.image1.[0]}}" alt="">
+                    </div>
+
+
+                    <div class="custom-file ">
+                      <input id="img1" type="file" multiple name="img1" />
+                      <input type="hidden" name="himg1" value="{{pdata.image1.[0]}}">
+                    </div>
+                    <div class="product-images">
+                      <img class="product-images" id="preview2" src="{{pdata.image2.[0]}}" alt="">
+                    </div>
+
+
+                    <div class="custom-file ">
+                      <input id="img2" type="file" multiple name="img2" value=""/>
+                      <input type="hidden" name="himg2" value="{{pdata.image2.[0]}}">
+
+                    </div>
+                    <div class="product-images">
+                      <img class="product-images" id="preview3" src="{{pdata.image3.[0]}}" alt="">
+                    </div>
+
+
+                    <div class="custom-file ">
+                      <input id="img3" type="file" multiple name="img3" />
+                      <input type="hidden" name="himg3" value="{{pdata.image3.[0]}}">
+                      <input type="hidden" name="id" value="{{pdata._id}}">
+                    </div>
+                    
+                  </div>
+
+                  <div class="col-6">
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase" onclick="return AllowSingleSpaceNotInFirstAndLast();">Edit Product Now</button>
+                  </div>
+
+                  </form>
+                 {{/if}}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const image = document.getElementById('preview1')
+    input = document.getElementById("img1")
+    input.addEventListener("change",()=>{
+        image.src= URL.createObjectURL(input.files[0])
+    })
+    const image1 = document.getElementById('preview2')
+    input1 = document.getElementById("img2")
+    input1.addEventListener("change",()=>{
+        image1.src= URL.createObjectURL(input1.files[0])
+    })
+    const image2 = document.getElementById('preview3')
+    input2 = document.getElementById("img3")
+    input2.addEventListener("change",()=>{
+        image2.src= URL.createObjectURL(input2.files[0])
+    })
+</script>
+<script>
+  const form = document.getElementById('form');
+  const nameInput = form.elements.name;
+
+
+  const nameError = document.getElementById('nameError');
+
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Validate name
+    if (nameInput.value.trim() === '') {
+      nameError.textContent = 'Please enter a name.';
+      return;
+    }
+    nameError.textContent = '';
+
+
+    
+
+    // All validation passed
+    form.submit();
+  });
+</script>
+
+{{>adminFooter}}
+
+
+
+
+
+
+ 

@@ -1,0 +1,194 @@
+{{>adminHeader}}
+<style>
+  /* Pagination container styles */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pagination link styles */
+.pagination-link {
+  text-decoration: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #007BFF;
+  border-radius: 5px;
+  color: #007BFF;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-link:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+/* Current page styles */
+.current-page {
+  font-weight: bold;
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #007BFF;
+  color: #fff;
+  border: 1px solid #007BFF;
+  border-radius: 5px;
+}
+
+</style>
+    <!--**********************************
+            Content body start
+        ***********************************-->
+    <div class="content-body">
+
+      
+
+         
+       
+
+
+ <div class="container-fluid pt-4 px-4">
+
+    <div class="bg-light text-center rounded p-4">
+
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="mb-0  text-primary shadow p-3 mb-5 bg-body rounded ">Products</h6>
+        {{!-- <a href="">Show All</a> --}}
+        <a class='btn btn-success ml-auto mt-5' href="addproduct" type="submit">Add Product</a>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table text-start align-middle table-bordered table-hover mb-0">
+          <thead>
+            <tr class="text-dark text-center">
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Image</th>
+              <th scope="col">Category</th>
+              <th scope="col">Brand</th>
+              <th scope="col">Price</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Blocked</th>
+              <th scope="col">Action</th>
+
+            </tr>
+          </thead>
+          {{#each Product}} 
+          <tbody>
+            <tr>
+              <td>{{addOne @index}}</td>
+              <td>{{this.name}}</td>
+              <td>{{this.description}}</td>
+              <td><img style="width: 80px;" src="{{this.image1.[0]}}" alt="Hi"></td>
+              <td>{{this.category}}</td>
+              <td>{{this.brand}}</td>
+              <td>{{this.price}}</td>
+              <td>{{this.quantity}}</td>
+              <td>{{this.is_blocked}}</td>
+              <td>
+                <a class="btn btn-outline-primary btn-sm px-4 py-2 m-1"
+                  href="/admin/editproduct?id={{this._id}}">Edit</a>
+
+                {{#if this.is_blocked}}
+                <a class="btn btn-outline-success btn-sm px-3 py-2 m-1"
+                  onclick="unblockProduct('{{this._id}}')">Unblock </a>
+                {{else}}
+                <a class="btn btn-outline-danger btn-sm px-3 py-2 m-1" onclick="blockProduct('{{this._id}}')">Block
+                </a>
+                {{/if}}
+
+              </td>
+            </tr>
+          </tbody>
+          {{/each}}
+        </table>
+
+      </div>
+      
+       <nav aria-label="...">
+     <div class="pagination">
+    <a href="#" id="prevPage" class="pagination-link"><< Previous</a>
+    <span id="currentPage" class="current-page">{{page}}</span>
+    <input type="text" hidden id="page" value="{{page}}">
+    <a href="#" id="nextPage" class="pagination-link">Next >></a>
+  </div>
+    </nav>
+    </div>
+
+   </div>
+  </div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- Add the SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<script text="ja">
+  const blockProduct = async(proID )=> {
+    const result = await Swal.fire({
+				title: 'Block Product',
+				text: 'Do you want to continue?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonText: 'Ok',
+				cancelButtonText: 'cancel'
+			});
+    	if (result.isConfirmed) {
+				    const response = await fetch(`/admin/blockproduct?id=${proID}`, {
+          
+        });
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				return
+			}
+      window.location.reload()
+  }
+    const unblockProduct = async(proID )=> {
+    const result = await Swal.fire({
+				title: 'Unblock Product',
+				text: 'Do you want to continue?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonText: 'Ok',
+				cancelButtonText: 'cancel'
+			});
+    	if (result.isConfirmed) {
+				    const response = await fetch(`/admin/unblockproduct?id=${proID}`, {
+          
+        });
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				return
+			}
+      window.location.reload()
+  }
+  </script>
+<script>
+ const prevPageLink = document.getElementById('prevPage');
+const nextPageLink = document.getElementById('nextPage');
+const currentPageElement = document.getElementById('currentPage');
+
+let currentPage = document.getElementById('page').value
+
+prevPageLink.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    updatePageLinks(currentPage);
+    fetchAndDisplayData(currentPage);
+  }
+});
+
+nextPageLink.addEventListener('click', () => {
+  currentPage++;
+  updatePageLinks(currentPage);
+  fetchAndDisplayData(currentPage);
+});
+
+function updatePageLinks(page) {
+ 
+  prevPageLink.href = `/admin/products?page=${page }`;
+  nextPageLink.href = `/admin/products?page=${page }`;
+}
+
+// Initial setup
+updatePageLinks(currentPage);
+
+
+</script>
+   {{>adminFooter}}
