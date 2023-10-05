@@ -4,7 +4,7 @@ const router = require("./routes/userRouter");
 var adminRouter = require("./routes/adminRouter");
 const mongoose = require("mongoose");
 const hbs = require("hbs");
-mongoose.connect("mongodb+srv://shafeek78:<sWWckXSLgKeLpRNS>@shopsimple-db.qtgk4qe.mongodb.net/?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://shafeek78:sWWckXSLgKeLpRNS@shop-simple-db.2uvxt0b.mongodb.net/?retryWrites=true&w=majority");
 
 const app = express();
 const logger = require("morgan");
